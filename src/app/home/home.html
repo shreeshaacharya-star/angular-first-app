@@ -1,11 +1,33 @@
 <section>
   <form>
-    <input type="text" placeholder="Filter by city" />
+    <input type="text" placeholder="Filter by city" #filter />
     <button class="primary" type="button">Search</button>
+    <!-- <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button> -->
   </form>
 </section>
 <section class="results">
-  @for(housingLocation of housingLocationList; track $index) {
-  <app-housing-location [housingLocation]="housingLocation"></app-housing-location>
+  <!-- This removes the checkbox CSS but the card remains selected -->
+  <!-- <ng-container *ngFor="let housingLocation of housingLocationList">
+    <app-housing-location
+      [housingLocation]="housingLocation"
+      (onSelect)="onSelected($event)"
+    ></app-housing-location>
+  </ng-container> -->
+
+  @for(housingLocation of housingLocationList(); track housingLocation.id) {
+  <app-back-shadow
+    ><app-housing-location [housingLocation]="housingLocation"></app-housing-location
+  ></app-back-shadow>
+  } @empty {
+  <span>No Houses are available!</span>
   }
 </section>
+<div class="controls">
+  <button (click)="togglePremium()" [disabled]="housingService.selectedHousingCount === 0">
+    Toggle Premium
+  </button>
+  <button (click)="shuffleCards()">Shuffle Cards</button>
+  <button (click)="delectSelectedCards()" [disabled]="housingService.selectedHousingCount === 0">
+    Delete Selected
+  </button>
+</div>

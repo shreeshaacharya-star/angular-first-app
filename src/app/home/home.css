@@ -21,6 +21,14 @@ button {
   color: white;
   border-radius: 8px;
 }
+.controls {
+  position: fixed;
+  right: 10px;
+  top: 45px;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 0.5em;
+}
 @media (min-width: 500px) and (max-width: 768px) {
   .results {
     grid-template-columns: repeat(2, 1fr);

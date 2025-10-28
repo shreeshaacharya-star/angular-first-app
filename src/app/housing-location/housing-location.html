@@ -1,4 +1,11 @@
-<!-- <section class="listing">
+<section class="listing {{ isChecked ? 'selected' : '' }}">
+  @if (housingLocation().isPremium) {
+  <div class="premium-tag">
+    <img class="premium-icon" src="assets/crown.svg" alt="premium-icon" />
+    Premium
+  </div>
+  }
+
   <img
     class="listing-photo"
     [src]="housingLocation().photo"
@@ -7,9 +14,13 @@
   />
   <h2 class="listing-heading">{{ housingLocation().name }}</h2>
   <p class="listing-location">{{ housingLocation().city }}, {{ housingLocation().state }}</p>
-</section> -->
+  <input type="checkbox" (change)="onCheckboxSelected($event)" name="cb" />
+  <label for="cb">Check Box</label>
+  <br />
+  <a [routerLink]="['/details', housingLocation().id]">Learn More</a>
+</section>
 
-<section class="listing">
+<!-- <section class="listing">
   <img
     class="listing-photo"
     [src]="housingLocation.photo"
@@ -18,4 +29,4 @@
   />
   <h2 class="listing-heading">{{ housingLocation.name }}</h2>
   <p class="listing-location">{{ housingLocation.city }}, {{ housingLocation.state }}</p>
-</section>
+</section> -->
