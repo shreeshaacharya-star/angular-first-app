@@ -11,14 +11,8 @@ import { BackShadow } from '../back-shadow/back-shadow';
   styleUrl: './home.css',
 })
 export class Home {
-  // housingLocationList: HousingLocationInfo[];
   housingService: HousingService = inject(HousingService);
   housingLocationList: Signal<HousingLocationInfo[]> = this.housingService.housingLocationList;
-
-  // constructor(housingService: HousingService) {
-  //   this.housingService = housingService;
-  //   // this.housingLocationList = this.housingService.getAllHousingLocations();
-  // }
 
   togglePremium() {
     this.housingService.togglePremium();

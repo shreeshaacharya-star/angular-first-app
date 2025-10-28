@@ -128,7 +128,6 @@ export class HousingService {
   }
 
   getHousingLocationById(id: number): HousingLocationInfo | undefined {
-    // return this.housingLocationList.find((housingLocation) => housingLocation.id === id); // Without using signals
     return this.housingLocationList().find((housingLocation) => housingLocation.id === id);
   }
 
@@ -137,14 +136,6 @@ export class HousingService {
   }
 
   onSelected(housingInfo: HousingLocationInfo, selected: boolean) {
-    // if (selected) {
-    //   this.selectedHousingLocations.push(housingInfo.id);
-    // } else {
-    //   this.selectedHousingLocations = this.selectedHousingLocations.filter(
-    //     (selectedHousing) => selectedHousing !== housingInfo.id
-    //   );
-    // }
-
     this._selectedHousingLocations.update((housingLocationIds) =>
       selected
         ? [...housingLocationIds, housingInfo.id]
@@ -153,14 +144,6 @@ export class HousingService {
   }
 
   togglePremium() {
-    // this.housingLocationList = this.housingLocationList.map((location) => {
-    //   if (this.selectedHousingLocations.includes(location.id)) {
-    //     return { ...location, isPremium: !location.isPremium };
-    //   }
-    //   return location;
-    // });
-    // return this.housingLocationList;
-
     this._housingLocationList.update((housingLocationList) =>
       housingLocationList.map((housingLocation) => {
         if (this.selectedHousingLocations().includes(housingLocation.id)) {
@@ -172,13 +155,6 @@ export class HousingService {
   }
 
   shuffleCards() {
-    // const list = this.dummyData;
-    // for (let i = list.length - 1; i > 0; i--) {
-    //   const j = Math.floor(Math.random() * (i + 1)); // pick random index
-    //   [list[i], list[j]] = [list[j], list[i]]; // swap
-    // }
-    // return list;
-
     this._housingLocationList.update((housingLocationList) => {
       for (let i = housingLocationList.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1)); // pick random index
@@ -192,12 +168,6 @@ export class HousingService {
   }
 
   delectSelectedCards() {
-    // this.housingLocationList = this.housingLocationList.filter(
-    //   (housingLocation) => !this.selectedHousingLocations.includes(housingLocation.id)
-    // );
-    // this.selectedHousingLocations = [];
-    // return this.housingLocationList;
-
     this._housingLocationList.update((housingLocationList) =>
       housingLocationList.filter(
         (housingLocation) => !this.selectedHousingLocations().includes(housingLocation.id)
@@ -205,15 +175,6 @@ export class HousingService {
     );
     this._selectedHousingLocations.set([]);
   }
-
-  // filterResults(searchText: string) {
-  //   if (!searchText) {
-  //     return this.housingLocationList();
-  //   }
-  //   return this.housingLocationList().filter((housingLocation) =>
-  //     housingLocation.city.toLowerCase().includes(searchText.toLowerCase())
-  //   );
-  // }
 
   submitApplication(firstName: string, lastName: string, email: string) {
     console.log(
