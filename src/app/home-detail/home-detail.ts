@@ -1,6 +1,8 @@
 import { Component, computed, inject, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HousingService } from '../service/housingService';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 // import { HousingLocationInfo } from '../types/housinglocation';
 
 @Component({
@@ -10,22 +12,16 @@ import { HousingService } from '../service/housingService';
   styleUrl: './home-detail.css',
 })
 export class HomeDetail {
-  readonly id: WritableSignal<string | null> = signal('');
   private route = inject(ActivatedRoute);
   private houseService = inject(HousingService);
 
-  constructor() {
-    // this.id.set(this.route.snapshot.paramMap.get('id'));
-    this.route.params.subscribe((params) => {
-      this.id.set(params['id']);
-    });
-  }
+  readonly id = toSignal(this.route.params.pipe(map((params) => params['id'])));
   housingLocation = computed(() => this.houseService.getHousingLocationById(Number(this.id())));
 
-  goNext() {
-    return this.houseService.getIdOfNextLocation(this.id() ?? '0');
+  goToNext() {
+    return this.houseService.getIdOfNextLocation(this.id() ?? '');
   }
-  goPrevious() {
-    return this.houseService.getIdOfPreviousLocation(this.id() ?? '0');
+  goToPrevious() {
+    return this.houseService.getIdOfPreviousLocation(this.id() ?? '');
   }
 }

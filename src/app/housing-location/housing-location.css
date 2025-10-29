@@ -44,8 +44,12 @@ section.listing a::after {
   font: bold 16px Arial, sans-serif; /* font-weight, font-size, font-family */
   color: white;
   border-radius: 0 30px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
 }
 .premium-icon {
   display: inline-block;
   width: 1em;
+  height: 1em;
 }

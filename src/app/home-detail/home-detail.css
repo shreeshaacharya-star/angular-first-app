@@ -1,0 +1,55 @@
+.houseing {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 50px;
+}
+
+.pagination {
+  margin-top: 30px;
+  display: grid;
+  grid-auto-flow: column;
+  width: fit-content;
+  gap: 0.5em;
+}
+
+.photo-container {
+  position: relative;
+}
+.houseing-photo {
+  height: 80vh;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 30px;
+}
+
+.premium-tag {
+  position: absolute;
+  padding: 1em;
+  background-color: var(--primary-color);
+  font: bold 16px Arial, sans-serif; /* font-weight, font-size, font-family */
+  color: white;
+  right: 30px;
+  border-radius: 0 0 8px 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.premium-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+
+.info-container {
+  padding: 20px;
+}
+
+.houseing-heading {
+  color: var(--primary-color);
+  font-size: xx-large;
+}
+
+.houseing-location {
+  font-size: large;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
