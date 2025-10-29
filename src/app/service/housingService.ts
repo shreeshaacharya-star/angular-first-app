@@ -181,4 +181,28 @@ export class HousingService {
       `Homes application received: firstName: ${firstName}, lastName: ${lastName}, email: ${email}.`
     );
   }
+
+  getIdOfPreviousLocation(id: string) {
+    const locationIndex = this._housingLocationList().findIndex(
+      (housingLocation) => housingLocation.id === Number(id)
+    );
+    const prevIndex = locationIndex - 1;
+
+    if (prevIndex < 0) {
+      return this._housingLocationList().at(-1)?.id;
+    }
+    return this._housingLocationList().at(prevIndex)?.id;
+  }
+
+  getIdOfNextLocation(id: string) {
+    const locationIndex = this._housingLocationList().findIndex(
+      (housingLocation) => housingLocation.id === Number(id)
+    );
+    const nextIndex = locationIndex + 1;
+
+    if (nextIndex === this._housingLocationList().length) {
+      return this._housingLocationList().at(0)?.id;
+    }
+    return this._housingLocationList().at(nextIndex)?.id;
+  }
 }

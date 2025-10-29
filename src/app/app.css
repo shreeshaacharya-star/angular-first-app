@@ -1,0 +1,8 @@
+header {
+  border-bottom: 1px solid var(--primary-color);
+  margin-bottom: 10px;
+}
+nav {
+  display: flex;
+  gap: 24px;
+}

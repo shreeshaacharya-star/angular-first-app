@@ -1,0 +1,27 @@
+<section>
+  <div class="pagination">
+    <button [routerLink]="['/home', goPrevious()]">Previous</button>
+    <button [routerLink]="['/home', goNext()]">Next</button>
+  </div>
+  @if (housingLocation()) { @if (housingLocation()?.isPremium) {
+  <div class="premium-tag">
+    <!-- <img class="premium-icon" src="assets/crown.svg" alt="premium-icon" /> -->
+    Premium
+  </div>
+  }
+
+  <img
+    class="listing-photo"
+    [src]="housingLocation()?.photo"
+    alt="Exterior photo of {{ housingLocation()?.name }}"
+    crossorigin
+  />
+  <h2 class="listing-heading">{{ housingLocation()?.name }}</h2>
+  <p class="listing-location">{{ housingLocation()?.city }}, {{ housingLocation()?.state }}</p>
+  <p>Available Units: {{ housingLocation()?.availableUnits }}</p>
+  <p>Laundry Available: {{ housingLocation()?.laundry }}</p>
+  <p>Wifi Available: {{ housingLocation()?.wifi }}</p>
+  } @else {
+  <p>No Housing Location found with Id: {{ id() }}</p>
+  }
+</section>

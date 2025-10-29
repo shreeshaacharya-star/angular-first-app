@@ -24,7 +24,7 @@ button {
 .controls {
   position: fixed;
   right: 10px;
-  top: 45px;
+  top: 15px;
   display: grid;
   grid-auto-flow: column;
   gap: 0.5em;

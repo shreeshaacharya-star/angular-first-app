@@ -1,5 +1,4 @@
-import { Component, signal } from '@angular/core';
-import { Home } from './home/home';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-root',
