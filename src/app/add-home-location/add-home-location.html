@@ -1,8 +1,85 @@
 <section class="sidebar-panel is-open">
-  <form>
+  <header><p class="title">Add new Location</p></header>
+  <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
     <label for="name">Name: </label>
-    <input id="name" type="text" [formControl]="name" />
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      [class.invalid]="name && name.invalid && (name.dirty || name.touched)"
+    />
+
+    @if (name && name.invalid && (name.dirty || name.touched)) {
+    <div class="alert">
+      @if (name.hasError('required')) {
+      <div>! Name is required.</div>
+      } @if (name.hasError('minlength')) {
+      <div>! Name must be at least 6 characters long.</div>
+      } @if (name.hasError('forbiddenName')) {
+      <div>! Name already present, name should be unique.</div>
+      }
+    </div>
+    }
+
+    <label for="city">City: </label>
+    <input
+      id="city"
+      type="text"
+      formControlName="city"
+      [class.invalid]="city && city.invalid && (city.dirty || city.touched)"
+    />
+
+    @if (city && city.invalid && (city.dirty || city.touched)) {
+    <div class="alert">
+      @if (city.hasError('required')) {
+      <div>! City is required.</div>
+      }
+    </div>
+    }
+
+    <label for="state">State: </label>
+    <select formControlName="state" id="state">
+      <option value="">Select a State</option>
+      @for (state of states; track $index) {
+      <option [value]="state">{{ state }}</option>
+      }
+    </select>
+
+    <label for="photo">Photo: </label>
+    <input type="text" formControlName="photo" id="photo" />
+    <label for="availableUnits">Available Units: </label>
+    <input
+      type="number"
+      id="availableUnits"
+      formControlName="availableUnits"
+      [class.invalid]="
+        availableUnits && availableUnits.invalid && (availableUnits.dirty || availableUnits.touched)
+      "
+    />
+
+    @if (availableUnits && availableUnits.invalid && (availableUnits.dirty ||
+    availableUnits.touched)) {
+    <div class="alert">
+      @if (availableUnits.hasError('min')) {
+      <div>! Units should be 1 or more.</div>
+      }
+    </div>
+    }
+
+    <p>Select available:</p>
+    <div class="check-box-container">
+      <label for="wifi"> <input type="checkbox" id="wifi" formControlName="wifi" />Wifi</label>
+      <label for="laundry">
+        <input type="checkbox" id="laundry" formControlName="laundry" />Laundry</label
+      >
+      <label for="Premium">
+        <input type="checkbox" id="Premium" formControlName="isPremium" />Premium</label
+      >
+    </div>
+
+    <div class="action-type">
+      <button class="primary" routerLink="../" [replaceUrl]="true">Cancel</button>
+      <button class="primary" type="submit" [disabled]="!locationForm.valid">Submit</button>
+    </div>
   </form>
-  <p>Value: {{ name.value }}</p>
-  <button (click)="onUpdate()">Update</button>
 </section>

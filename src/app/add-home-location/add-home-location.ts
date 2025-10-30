@@ -1,16 +1,65 @@
-import { Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import {
+  AbstractControl,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+import { HousingService } from '../service/housingService';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-add-home-location',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './add-home-location.html',
   styleUrl: './add-home-location.css',
 })
 export class AddHomeLocation {
-  name = new FormControl('');
+  formBuilder = inject(NonNullableFormBuilder);
+  housingService = inject(HousingService);
+  router = inject(Router);
+  currentRoute = inject(ActivatedRoute);
 
-  onUpdate() {
-    this.name.setValue('Nancy');
+  states = ['IL', 'CA', 'AK', 'IN', 'OR'];
+
+  locationForm = this.formBuilder.group({
+    name: ['', [Validators.required, Validators.minLength(6), this.forbiddenNameValidator()]],
+    city: ['', Validators.required],
+    state: [''],
+    photo: [''],
+    availableUnits: [1, Validators.min(1)],
+    wifi: [false],
+    laundry: [false],
+    isPremium: [false],
+  });
+
+  get name() {
+    return this.locationForm.get('name');
+  }
+
+  get city() {
+    return this.locationForm.get('city');
+  }
+
+  get availableUnits() {
+    return this.locationForm.get('availableUnits');
+  }
+
+  onSubmit() {
+    this.housingService.addLocation(this.locationForm.getRawValue());
+    this.router.navigate(['../'], { relativeTo: this.currentRoute, replaceUrl: true });
+  }
+
+  forbiddenNameValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const forbidden = this.housingService
+        .housingLocationList()
+        .some(
+          (housingLocation) => housingLocation.name.toLowerCase() === control.value.toLowerCase()
+        );
+      return forbidden ? { forbiddenName: { value: control.value } } : null;
+    };
   }
 }

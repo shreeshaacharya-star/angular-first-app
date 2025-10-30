@@ -28,6 +28,7 @@ button {
   display: grid;
   grid-auto-flow: column;
   gap: 0.5em;
+  z-index: 1;
 }
 @media (min-width: 500px) and (max-width: 768px) {
   .results {

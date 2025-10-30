@@ -1,5 +1,6 @@
 import { computed, Injectable, signal, WritableSignal } from '@angular/core';
 import { HousingLocationInfo } from '../types/housinglocation';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -216,5 +217,16 @@ export class HousingService {
 
   filterResults(searchText: string) {
     this._searchText.set(searchText);
+  }
+
+  addLocation(locationForm: Omit<HousingLocationInfo, 'id'>) {
+    const newLocation: HousingLocationInfo = {
+      ...locationForm,
+      id: this._housingLocationList().length,
+    };
+    this._housingLocationList.update((housingLocationList) => [
+      ...housingLocationList,
+      newLocation,
+    ]);
   }
 }
