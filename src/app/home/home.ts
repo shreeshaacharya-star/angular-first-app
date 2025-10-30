@@ -3,11 +3,11 @@ import { HousingLocation } from '../housing-location/housing-location';
 import { HousingLocationInfo } from '../types/housinglocation';
 import { HousingService } from '../service/housingService';
 import { BackShadow } from '../back-shadow/back-shadow';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [HousingLocation, BackShadow, BackShadow, RouterLink],
+  imports: [HousingLocation, BackShadow, BackShadow, RouterLink, RouterOutlet],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

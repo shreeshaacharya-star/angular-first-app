@@ -14,11 +14,13 @@ export const routes: Routes = [
     path: 'home',
     component: Home,
     title: 'Home page',
-  },
-  {
-    path: 'home/add',
-    component: AddHomeLocation,
-    title: 'Add Home',
+    children: [
+      {
+        path: 'add',
+        component: AddHomeLocation,
+        title: 'Add Home',
+      },
+    ],
   },
   {
     path: 'home/:id',

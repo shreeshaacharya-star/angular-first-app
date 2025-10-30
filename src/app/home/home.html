@@ -1,3 +1,14 @@
+<div class="controls">
+  <button routerLink="/home/add">+ Add</button>
+  <button (click)="togglePremium()" [disabled]="housingService.selectedHousingCount === 0">
+    Toggle Premium
+  </button>
+  <button (click)="shuffleCards()">Shuffle Cards</button>
+  <button (click)="delectSelectedCards()" [disabled]="housingService.selectedHousingCount === 0">
+    Delete Selected
+  </button>
+</div>
+
 <section>
   <form>
     <input type="text" placeholder="Filter by city" #filter />
@@ -13,13 +24,4 @@
   <span>No Houses are available!</span>
   }
 </section>
-<div class="controls">
-  <button routerLink="/home/add">+ Add</button>
-  <button (click)="togglePremium()" [disabled]="housingService.selectedHousingCount === 0">
-    Toggle Premium
-  </button>
-  <button (click)="shuffleCards()">Shuffle Cards</button>
-  <button (click)="delectSelectedCards()" [disabled]="housingService.selectedHousingCount === 0">
-    Delete Selected
-  </button>
-</div>
+<router-outlet />

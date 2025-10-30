@@ -1,1 +1,8 @@
-<p>add-home-location works!</p>
+<section class="sidebar-panel is-open">
+  <form>
+    <label for="name">Name: </label>
+    <input id="name" type="text" [formControl]="name" />
+  </form>
+  <p>Value: {{ name.value }}</p>
+  <button (click)="onUpdate()">Update</button>
+</section>
