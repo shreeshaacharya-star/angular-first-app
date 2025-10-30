@@ -1,4 +1,4 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { computed, Injectable, signal, WritableSignal } from '@angular/core';
 import { HousingLocationInfo } from '../types/housinglocation';
 
 @Injectable({
@@ -119,9 +119,17 @@ export class HousingService {
       isPremium: true,
     },
   ]);
+  private _searchText = signal('');
 
   readonly selectedHousingLocations = this._selectedHousingLocations.asReadonly();
-  readonly housingLocationList = this._housingLocationList.asReadonly();
+  readonly housingLocationList = computed(() => {
+    if (this._searchText()) {
+      return this._housingLocationList().filter((housingLocation) =>
+        housingLocation?.city.toLowerCase().includes(this._searchText().toLowerCase())
+      );
+    }
+    return this._housingLocationList();
+  });
 
   getAllHousingLocations(): HousingLocationInfo[] {
     return this.housingLocationList();
@@ -204,5 +212,9 @@ export class HousingService {
       return this._housingLocationList().at(0)?.id;
     }
     return this._housingLocationList().at(nextIndex)?.id;
+  }
+
+  filterResults(searchText: string) {
+    this._searchText.set(searchText);
   }
 }

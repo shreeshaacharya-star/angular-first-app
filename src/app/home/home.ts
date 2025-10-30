@@ -3,10 +3,11 @@ import { HousingLocation } from '../housing-location/housing-location';
 import { HousingLocationInfo } from '../types/housinglocation';
 import { HousingService } from '../service/housingService';
 import { BackShadow } from '../back-shadow/back-shadow';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [HousingLocation, BackShadow, BackShadow],
+  imports: [HousingLocation, BackShadow, BackShadow, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -26,7 +27,7 @@ export class Home {
     this.housingService.delectSelectedCards();
   }
 
-  // filterResults(text: string) {
-  //   this.housingService.filterResults(text);
-  // }
+  filterResults(text: string) {
+    this.housingService.filterResults(text);
+  }
 }
