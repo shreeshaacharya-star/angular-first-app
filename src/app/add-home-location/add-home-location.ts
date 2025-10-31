@@ -8,15 +8,16 @@ import {
   Validators,
 } from '@angular/forms';
 import { HousingService } from '../service/housingService';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CanComponentDeactivate } from '../guard/form-guard-guard';
 
 @Component({
   selector: 'app-add-home-location',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './add-home-location.html',
   styleUrl: './add-home-location.css',
 })
-export class AddHomeLocation {
+export class AddHomeLocation implements CanComponentDeactivate {
   formBuilder = inject(NonNullableFormBuilder);
   housingService = inject(HousingService);
   router = inject(Router);
@@ -47,18 +48,14 @@ export class AddHomeLocation {
     return this.locationForm.get('availableUnits');
   }
 
-  onCancel() {
-    if (this.locationForm.dirty) {
-      const confirmDiscard = confirm('You have unsaved changes. Discard them');
-      if (!confirmDiscard) {
-        return;
-      }
-    }
-    this.router.navigate(['../'], { relativeTo: this.currentRoute, replaceUrl: true });
+  // Shows a confirm message if the form is dirty
+  hasUnsavedChanges() {
+    return this.locationForm.dirty;
   }
 
   onSubmit() {
     this.housingService.addLocation(this.locationForm.getRawValue());
+    this.locationForm.markAsPristine(); // Make form pristine to pass the form-guard (don't ask any confirmation in this case)
     this.router.navigate(['../'], { relativeTo: this.currentRoute, replaceUrl: true });
   }
 

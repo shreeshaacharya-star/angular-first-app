@@ -61,7 +61,7 @@
     </div>
 
     <div class="action-type">
-      <button class="primary" (click)="onCancel()">Cancel</button>
+      <button class="primary" routerLink="../" [replaceUrl]="true">Cancel</button>
       <button class="primary" type="submit" [disabled]="!locationForm.valid">Submit</button>
     </div>
   </form>

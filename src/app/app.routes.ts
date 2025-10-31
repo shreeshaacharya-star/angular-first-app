@@ -3,6 +3,7 @@ import { Home } from './home/home';
 import { About } from './about/about';
 import { HomeDetail } from './home-detail/home-detail';
 import { AddHomeLocation } from './add-home-location/add-home-location';
+import { formGuardGuard } from './guard/form-guard-guard';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,7 @@ export const routes: Routes = [
         path: 'add',
         component: AddHomeLocation,
         title: 'Add Home',
+        canDeactivate: [formGuardGuard],
       },
     ],
   },
