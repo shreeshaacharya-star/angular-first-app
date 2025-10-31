@@ -2,12 +2,7 @@
   <header><p class="title">Add new Location</p></header>
   <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
     <label for="name">Name: </label>
-    <input
-      id="name"
-      type="text"
-      formControlName="name"
-      [class.invalid]="name && name.invalid && (name.dirty || name.touched)"
-    />
+    <input id="name" type="text" formControlName="name" />
 
     @if (name && name.invalid && (name.dirty || name.touched)) {
     <div class="alert">
@@ -16,18 +11,13 @@
       } @if (name.hasError('minlength')) {
       <div>! Name must be at least 6 characters long.</div>
       } @if (name.hasError('forbiddenName')) {
-      <div>! Name already present, name should be unique.</div>
+      <div>{{ name.errors?.['forbiddenName'].message}}</div>
       }
     </div>
     }
 
     <label for="city">City: </label>
-    <input
-      id="city"
-      type="text"
-      formControlName="city"
-      [class.invalid]="city && city.invalid && (city.dirty || city.touched)"
-    />
+    <input id="city" type="text" formControlName="city" />
 
     @if (city && city.invalid && (city.dirty || city.touched)) {
     <div class="alert">
@@ -48,14 +38,7 @@
     <label for="photo">Photo: </label>
     <input type="text" formControlName="photo" id="photo" />
     <label for="availableUnits">Available Units: </label>
-    <input
-      type="number"
-      id="availableUnits"
-      formControlName="availableUnits"
-      [class.invalid]="
-        availableUnits && availableUnits.invalid && (availableUnits.dirty || availableUnits.touched)
-      "
-    />
+    <input type="number" id="availableUnits" formControlName="availableUnits" />
 
     @if (availableUnits && availableUnits.invalid && (availableUnits.dirty ||
     availableUnits.touched)) {
@@ -78,7 +61,7 @@
     </div>
 
     <div class="action-type">
-      <button class="primary" routerLink="../" [replaceUrl]="true">Cancel</button>
+      <button class="primary" (click)="onCancel()">Cancel</button>
       <button class="primary" type="submit" [disabled]="!locationForm.valid">Submit</button>
     </div>
   </form>

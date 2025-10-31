@@ -8,11 +8,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { HousingService } from '../service/housingService';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-home-location',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule],
   templateUrl: './add-home-location.html',
   styleUrl: './add-home-location.css',
 })
@@ -47,6 +47,16 @@ export class AddHomeLocation {
     return this.locationForm.get('availableUnits');
   }
 
+  onCancel() {
+    if (this.locationForm.dirty) {
+      const confirmDiscard = confirm('You have unsaved changes. Discard them');
+      if (!confirmDiscard) {
+        return;
+      }
+    }
+    this.router.navigate(['../'], { relativeTo: this.currentRoute, replaceUrl: true });
+  }
+
   onSubmit() {
     this.housingService.addLocation(this.locationForm.getRawValue());
     this.router.navigate(['../'], { relativeTo: this.currentRoute, replaceUrl: true });
@@ -59,7 +69,9 @@ export class AddHomeLocation {
         .some(
           (housingLocation) => housingLocation.name.toLowerCase() === control.value.toLowerCase()
         );
-      return forbidden ? { forbiddenName: { value: control.value } } : null;
+      return forbidden
+        ? { forbiddenName: { value: control.value, message: '! Name already exists' } }
+        : null;
     };
   }
 }
