@@ -22,8 +22,10 @@
     <p>Laundry Available: {{ housingLocation()?.laundry }}</p>
     <p>Wifi Available: {{ housingLocation()?.wifi }}</p>
     <div class="pagination">
-      <button class="primary" [routerLink]="['/home', goToPrevious()]">Previous</button>
-      <button class="primary" [routerLink]="['/home', goToNext()]">Next</button>
+      <button class="primary" [routerLink]="['/home', goToPrevious()]" [replaceUrl]="true">
+        Previous
+      </button>
+      <button class="primary" [routerLink]="['/home', goToNext()]" [replaceUrl]="true">Next</button>
     </div>
   </div>
 </section>
