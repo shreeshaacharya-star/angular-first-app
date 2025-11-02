@@ -229,4 +229,12 @@ export class HousingService {
       newLocation,
     ]);
   }
+
+  updateLocationInfo(id: number, updatedhousingLocation: Omit<HousingLocationInfo, 'id'>) {
+    this._housingLocationList.update((housingLocationList) =>
+      housingLocationList.map((housingLocation) =>
+        housingLocation.id === id ? { id, ...updatedhousingLocation } : housingLocation
+      )
+    );
+  }
 }

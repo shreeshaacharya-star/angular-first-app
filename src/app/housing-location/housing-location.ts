@@ -12,8 +12,7 @@ import { HousingService } from '../service/housingService';
 export class HousingLocation {
   housingLocation = input.required<HousingLocationInfo>();
   housingService = inject(HousingService);
-  // @Input({ required: true }) housingLocation!: HousingLocationInfo;
-  // onSelect = output<{ housingInfo: HousingLocationInfo; selected: boolean }>();
+
   isChecked = false;
 
   onCheckboxSelected(event: Event) {

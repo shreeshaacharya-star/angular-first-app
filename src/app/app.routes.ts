@@ -22,6 +22,12 @@ export const routes: Routes = [
         title: 'Add Home',
         canDeactivate: [formGuardGuard],
       },
+      {
+        path: 'edit/:id',
+        component: AddHomeLocation,
+        title: 'Edit Home',
+        canDeactivate: [formGuardGuard],
+      },
     ],
   },
   {

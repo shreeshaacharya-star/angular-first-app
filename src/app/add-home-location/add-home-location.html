@@ -1,5 +1,7 @@
 <section class="sidebar-panel is-open">
-  <header><p class="title">Add new Location</p></header>
+  <header>
+    <p class="title">@if (isEditMode()) { Edit } @else {Add new} Location</p>
+  </header>
   <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
     <label for="name">Name: </label>
     <input id="name" type="text" formControlName="name" />
@@ -61,7 +63,7 @@
     </div>
 
     <div class="action-type">
-      <button class="primary" routerLink="../" [replaceUrl]="true">Cancel</button>
+      <button class="primary" routerLink="/home" [replaceUrl]="true">Cancel</button>
       <button class="primary" type="submit" [disabled]="!locationForm.valid">Submit</button>
     </div>
   </form>

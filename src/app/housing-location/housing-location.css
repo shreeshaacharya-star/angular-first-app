@@ -53,3 +53,17 @@ section.listing a::after {
   width: 1em;
   height: 1em;
 }
+
+input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  margin-left: 25px;
+  margin-right: 8px;
+}
+.edit-button {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}

@@ -1,5 +1,5 @@
 <div class="controls">
-  <button routerLink="/home/add">+ Add</button>
+  <button routerLink="/home/add" [replaceUrl]="true">+ Add</button>
   <button (click)="togglePremium()" [disabled]="housingService.selectedHousingCount === 0">
     Toggle Premium
   </button>

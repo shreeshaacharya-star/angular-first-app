@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import {
   AbstractControl,
   NonNullableFormBuilder,
@@ -10,6 +10,8 @@ import {
 import { HousingService } from '../service/housingService';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CanComponentDeactivate } from '../guard/form-guard-guard';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-add-home-location',
@@ -23,6 +25,17 @@ export class AddHomeLocation implements CanComponentDeactivate {
   router = inject(Router);
   currentRoute = inject(ActivatedRoute);
 
+  isEditMode = toSignal(
+    this.currentRoute.url.pipe(map((urlSegment) => urlSegment.at(0)?.toString() === 'edit'))
+  );
+  readonly id = toSignal<string>(this.currentRoute.params.pipe(map((param) => param['id'])));
+  housingLocation = computed(() => {
+    if (this.isEditMode()) {
+      return this.housingService.getHousingLocationById(Number(this.id()));
+    }
+    return undefined;
+  });
+
   states = ['IL', 'CA', 'AK', 'IN', 'OR'];
 
   locationForm = this.formBuilder.group({
@@ -35,6 +48,15 @@ export class AddHomeLocation implements CanComponentDeactivate {
     laundry: [false],
     isPremium: [false],
   });
+
+  constructor() {
+    effect(() => {
+      const location = this.housingLocation();
+      if (location) {
+        this.locationForm.patchValue(location);
+      }
+    });
+  }
 
   get name() {
     return this.locationForm.get('name');
@@ -54,13 +76,21 @@ export class AddHomeLocation implements CanComponentDeactivate {
   }
 
   onSubmit() {
-    this.housingService.addLocation(this.locationForm.getRawValue());
+    if (this.isEditMode()) {
+      this.housingService.updateLocationInfo(Number(this.id()), this.locationForm.getRawValue());
+    } else {
+      this.housingService.addLocation(this.locationForm.getRawValue());
+    }
     this.locationForm.markAsPristine(); // Make form pristine to pass the form-guard (don't ask any confirmation in this case)
-    this.router.navigate(['../'], { relativeTo: this.currentRoute, replaceUrl: true });
+    this.router.navigate(['/home'], { replaceUrl: true });
   }
 
   forbiddenNameValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+      if (this.isEditMode() && control.value === this.housingLocation()?.name) {
+        return null;
+      }
+
       const forbidden = this.housingService
         .housingLocationList()
         .some(
